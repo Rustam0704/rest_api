@@ -4,8 +4,9 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.users.models import User, Post
-from apps.users.serializers import UserSerializer, UserCreateSerializer, PostSerializer, PostCreateSerializer
+from apps.users.models import User, Post, Comment
+from apps.users.serializers import UserSerializer, UserCreateSerializer, PostSerializer, PostCreateSerializer, \
+    CommentSerializer
 
 
 class UserAPIView(APIView):
@@ -38,4 +39,10 @@ class PostAPIView(APIView):
         post = serializer.save()
         return Response(data={'detail': 'Post created'}, status=status.HTTP_201_CREATED)
 
+
+class CommentAPIView(APIView):
+    def get(self, request, pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        serializer =CommentSerializer(comment)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 

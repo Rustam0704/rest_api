@@ -3,7 +3,7 @@ from datetime import timezone
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
-from apps.users.models import User, Post
+from apps.users.models import User, Post, Comment
 from rest_framework import serializers
 
 
@@ -62,3 +62,7 @@ class PostCreateSerializer(ModelSerializer):
         post.save()
         return post
 
+class CommentSerializer(ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('post', 'user', 'body')
